@@ -12,7 +12,7 @@ func check_Answer(){
 }
 
 struct ContentView: View {
-    @State private var givenInterger = 30
+    @State private var givenInterger = Int.random(in: 0...101)
     @State private var Guess = "0"
     @State private var PlaceHolderGuess = "0"
     @State private var MinimumGuess = 0
@@ -51,6 +51,7 @@ struct ContentView: View {
                         HStack{
                             Spacer()
                             Button("Restart? "){
+                                self.restart_staets()
                             }
                             Spacer()
                         }
@@ -77,7 +78,16 @@ struct ContentView: View {
             return
         }
         
-    }
+    }
+    
+    func restart_staets(){
+        self.MaximumGuess = 100
+        self.MinimumGuess = 0
+        self.PlaceHolderGuess = "0"
+        self.Guess = "0"
+        self.givenInterger = Int.random(in: 0...101)
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
