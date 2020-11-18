@@ -17,6 +17,8 @@ struct ContentView: View {
     @State private var PlaceHolderGuess = "0"
     @State private var MinimumGuess = 0
     @State private var MaximumGuess = 100
+    @State private var showAlert = false
+    @State private var gameover = false
     
     var body: some View {
         NavigationView{
@@ -31,7 +33,11 @@ struct ContentView: View {
                             Button("Guess"){
                                 self.Guess = PlaceHolderGuess
                                 update_state(GivenGuess: self.Guess)
+                                if Int(self.Guess) == self.givenInterger{
+                                    self.gameover = true
+                                }
                             }
+                            .disabled(gameover)
                             
                             Spacer()
                         }
@@ -42,7 +48,7 @@ struct ContentView: View {
                         } else{
                             Text("It is not \(Guess)")
                         }
-
+                        
                         Text("It is Lower than \(MaximumGuess)")
                         Text("It is Higher than \(MinimumGuess)")
                     }
@@ -60,6 +66,9 @@ struct ContentView: View {
                 }
             }
             .navigationBarTitle("Guessing Game")
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Guessing Game"), message: Text("It is \(givenInterger)"), dismissButton: .default(Text("Got it!")))
+            }
         }
     }
     
@@ -70,11 +79,12 @@ struct ContentView: View {
         
         if GivenInt > self.givenInterger{
             self.MaximumGuess = GivenInt
-        
+            
         }else if GivenInt < self.givenInterger{
             self.MinimumGuess = GivenInt
-       
+            
         }else if GivenInt == self.givenInterger{
+            self.showAlert = true
             return
         }
         
@@ -86,6 +96,7 @@ struct ContentView: View {
         self.PlaceHolderGuess = "0"
         self.Guess = "0"
         self.givenInterger = Int.random(in: 0...101)
+        self.gameover = false
     }
     
 }
