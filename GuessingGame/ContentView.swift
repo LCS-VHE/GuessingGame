@@ -7,10 +7,50 @@
 
 import SwiftUI
 
+func check_Answer(){
+    
+}
+
 struct ContentView: View {
+    @State private var givenInterger = 30
+    @State private var Guess = "0"
+    @State private var MinimumGuess = 0
+    @State private var MaximumGuess = 100
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView{
+            VStack{
+                Form{
+                    Section(header:Text("Your Guess")){
+                        TextField("Your Guess? ", text: $Guess)
+                    }
+                    Section(header:Text("Guesss")){
+                        HStack{
+                            Spacer()
+                            Button("Guess"){
+                                
+                            }
+                            Spacer()
+                        }
+                    }
+                    Section(header:Text("Hint")){
+                        Text("It is Lower than \(MinimumGuess)")
+                        Text("It is Higher than \(MaximumGuess)")
+                    }
+                    
+                    Section(header:Text("Restart ?")){
+                        HStack{
+                            Spacer()
+                            Button("Restart? "){
+                                
+                            }
+                            Spacer()
+                        }
+                    }
+                }
+            }
+            .navigationBarTitle("Guessing Game")
+        }
     }
 }
 
