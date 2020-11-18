@@ -29,7 +29,8 @@ struct ContentView: View {
                             Spacer()
                             Button("Guess"){
                                 
-                            }
+                            }
+                            
                             Spacer()
                         }
                     }
@@ -42,10 +43,15 @@ struct ContentView: View {
                         HStack{
                             Spacer()
                             Button("Restart? "){
-                                
                             }
                             Spacer()
                         }
+                        
+                        NavigationLink(
+                            destination: Text("Settings"),
+                            label: {
+                                /*@START_MENU_TOKEN@*/Text("Navigate")/*@END_MENU_TOKEN@*/
+                            })
                     }
                 }
             }
