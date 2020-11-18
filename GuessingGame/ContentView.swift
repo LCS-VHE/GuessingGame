@@ -14,6 +14,7 @@ func check_Answer(){
 struct ContentView: View {
     @State private var givenInterger = 30
     @State private var Guess = "0"
+    @State private var PlaceHolderGuess = "0"
     @State private var MinimumGuess = 0
     @State private var MaximumGuess = 100
     
@@ -22,21 +23,28 @@ struct ContentView: View {
             VStack{
                 Form{
                     Section(header:Text("Your Guess")){
-                        TextField("Your Guess? ", text: $Guess)
+                        TextField("Your Guess? ", text: $PlaceHolderGuess)
                     }
                     Section(header:Text("Guesss")){
                         HStack{
                             Spacer()
                             Button("Guess"){
-                                
+                                self.Guess = PlaceHolderGuess
+                                update_state(GivenGuess: self.Guess)
                             }
                             
                             Spacer()
                         }
                     }
                     Section(header:Text("Hint")){
-                        Text("It is Lower than \(MinimumGuess)")
-                        Text("It is Higher than \(MaximumGuess)")
+                        if Int(self.Guess) == self.givenInterger{
+                            Text("It is \(Guess)")
+                        } else{
+                            Text("It is not \(Guess)")
+                        }
+
+                        Text("It is Lower than \(MaximumGuess)")
+                        Text("It is Higher than \(MinimumGuess)")
                     }
                     
                     Section(header:Text("Restart ?")){
@@ -47,17 +55,29 @@ struct ContentView: View {
                             Spacer()
                         }
                         
-                        NavigationLink(
-                            destination: Text("Settings"),
-                            label: {
-                                /*@START_MENU_TOKEN@*/Text("Navigate")/*@END_MENU_TOKEN@*/
-                            })
                     }
                 }
             }
             .navigationBarTitle("Guessing Game")
         }
     }
+    
+    func update_state(GivenGuess:String){
+        guard let GivenInt = Int(GivenGuess)else{
+            return
+        }
+        
+        if GivenInt > self.givenInterger{
+            self.MaximumGuess = GivenInt
+        
+        }else if GivenInt < self.givenInterger{
+            self.MinimumGuess = GivenInt
+       
+        }else if GivenInt == self.givenInterger{
+            return
+        }
+        
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
